@@ -46,3 +46,20 @@ langage = "Python"
 # OU ENCORE 
 
 # print("Je m'appelle {} et j'ai {} ans. J'apprends le langage {}.".format(monNom,age,langage)) 
+
+
+
+#_____________________________
+# Exercice 24 : afficher la table de 8
+
+# for i in range(0,11):
+    # print("8 x {} = {}".format(i, 8*i))
+
+
+
+#_____________________________
+# Exercice 25 : afficher le dossier courant (repertoire de travail)
+
+# import os
+
+# print(os.getcwd()) # Le module os permet de faire des opérations courantes sur le système d'exploitation : creer/suppr des dossiers/fichiers
