@@ -96,3 +96,39 @@
 # if __name__ == '__main__':
 #     print(supprimerDoublons_bis([0,3,5,7,3,5,1,-1]))
 #     print(supprimerDoublons_bis([0,5,9,10,3.2,1,-3])) 
+
+
+
+#_____________________________
+# Exercice 39 : ajout d'éléments dans un dictionnaire
+
+# def ajoutElementDict(cle,valeur,dic):
+#     dic[cle] = valeur
+#     return dic
+
+# if __name__ == '__main__':
+#     print(ajoutElementDict("Baptiste", 29, {"Julien":14,"Laurent":31}))
+#     print(ajoutElementDict("poids",65.3,{})) 
+
+
+#_____________________________
+# Exercice 40 : recréer la fonction max() de python
+
+# def maximum(L):
+#     return sorted(L)[-1]
+
+# if __name__ == '__main__':
+#     print(maximum([1,2,4,5,6,2,4,21,5,65,3,2,5,1,41])) 
+
+# OU SINON
+
+# def maximum(L):
+#     max = L[0] # On créer une variable max qui prends la valeur du premier element de la liste
+#     for i in range(1,len(L)): # On parcours toute la liste et on compare chaque element avec notre variable max
+#         if L[i] > max: # si l'element est plus grand que notre variable, on remplace la valeur de notre variable par cet element
+#             max = L[i]
+    
+#     return max
+
+# if __name__ == '__main__':
+#     print(maximum([1,2,4,5,6,2,4,21,5,65,3,2,5,1,41]))
