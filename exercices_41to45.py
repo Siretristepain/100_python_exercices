@@ -42,3 +42,49 @@
 
 
 
+
+
+#_____________________________
+# Exercice 43 : recréation de la fonction min
+
+# def minimum(L):
+#     plus_petit = L[0]
+#     for element in L:
+#         if element < plus_petit:
+#             plus_petit = element
+#     return plus_petit
+
+# if __name__ =='__main__':
+#     print(minimum([-9,2,4,1,8]))
+#     print(minimum([-3,1,7,8,2,3])) 
+
+
+#_____________________________
+# Exercice 44 : recréation de la fonction len
+
+# def longueur(L):
+#     long = 0
+#     for element in L:
+#         long += 1
+#     return long
+
+# if __name__ == '__main__':
+#     print(longueur([3,6,7,"abde",[1,3,57],True])) 
+#     print(longueur([])) 
+
+
+
+#_____________________________
+# Exercice 45 : calcul de la moyenne d'une liste 
+
+# def moyenneListe(L):
+#     somme = 0
+#     for element in L :
+#         somme += element
+
+#     moyenne = somme / len(L) 
+#     return moyenne 
+
+# if __name__ == '__main__':
+#     print(moyenneListe([1,2,3,4,5,6,7])) 
+#     print(moyenneListe([3,0,-1,5,6,9,17])) 
