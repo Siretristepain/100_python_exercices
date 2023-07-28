@@ -82,3 +82,23 @@
 # if __name__ == '__main__':
 #     print(supprEspace("La France est belle !"))
 #     print(supprEspace("Je vais prendre mon vélo.")) 
+
+
+
+#_____________________________
+# Exercice 55 : position d'un élément dans une liste
+
+# def positionEltListe(L,x):
+#     indices = []
+#     for i in range(len(L)):
+#         if L[i] == x:
+#             indices.append(i)
+    
+#     if len(indices) == 0:
+#         return "L'élément {} ne se trouve pas dans la liste {}.".format(x, L) 
+#     else : 
+#         return indices
+    
+# if __name__ == '__main__':
+#     print(positionEltListe([1,2,3,6,8,7,3], 3))
+#     print(positionEltListe([6,8,9,1,3,7],-1)) 
