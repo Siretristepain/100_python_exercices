@@ -53,3 +53,32 @@
 #     print(divMult(5,2,100))
 #     print(divMult(11,3,85)) 
 
+
+
+#_____________________________
+# Exercice 53 : présence d'une voyelle dans une chaine de caracteres
+
+# def presenceVoyelle(phrase):
+#     voyelle = ['a','e','i','o','u','y']
+#     for car in phrase:
+#         if car in voyelle:
+#             return True # ! On oublie pas qu'une fonction prends fin à partir du moment où elle rencontre un return
+#     return False 
+
+# if __name__ == '__main__':
+#     print(presenceVoyelle("Bonjour je vais prendre ma douche"))
+#     print(presenceVoyelle("rbhpm")) 
+
+
+
+#_____________________________
+# Exercice 54 : suppression des espaces dans une phrase 
+
+# def supprEspace(phrase):
+#     phrase = phrase.split() # transfome la str en liste de tous les mots. split() et split(" ") retourne la meme chose
+#     phrase = ''.join(phrase) # transforme la liste en str à nouveau en regroupant tous les mots sans espaces
+#     return phrase 
+
+# if __name__ == '__main__':
+#     print(supprEspace("La France est belle !"))
+#     print(supprEspace("Je vais prendre mon vélo.")) 
