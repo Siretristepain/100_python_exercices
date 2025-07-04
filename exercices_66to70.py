@@ -120,23 +120,23 @@ Donc, il signale une incohérence de type entre avant et après.
 👉 C’est une limitation de l’analyse de type "naïve" : Pylance ne suit pas les mutations internes aussi bien que Python à l’exécution.
 """
 
-def liste_utilisateur():
-    # Demander la liste d'entier à l'utilisateur
-    liste_utilisateur = input("Saisir une liste d'entier : ")
+# def liste_utilisateur():
+#     # Demander la liste d'entier à l'utilisateur
+#     liste_utilisateur = input("Saisir une liste d'entier : ")
 
-    # On enlève les crochets au début et à la fin de la liste (s'il y en a. Pas d'erreur avec lstrip/rstrip s'il y en a pas).
-    liste_utilisateur = liste_utilisateur.lstrip('[')
-    liste_utilisateur = liste_utilisateur.rstrip(']')
+#     # On enlève les crochets au début et à la fin de la liste (s'il y en a. Pas d'erreur avec lstrip/rstrip s'il y en a pas).
+#     liste_utilisateur = liste_utilisateur.lstrip('[')
+#     liste_utilisateur = liste_utilisateur.rstrip(']')
 
-    # On sépare les entiers par les virgules
-    tes = liste_utilisateur.split(sep=',')
+#     # On sépare les entiers par les virgules
+#     tes = liste_utilisateur.split(sep=',')
 
-    # On passe chaque entier en type integer car ils sont en str pour l'instant
-    for i in range(len(tes)):
-        tes[i] = int(tes[i])
+#     # On passe chaque entier en type integer car ils sont en str pour l'instant
+#     for i in range(len(tes)):
+#         tes[i] = int(tes[i])
 
 
-    return liste_utilisateur
+#     return liste_utilisateur
 
 
 
@@ -151,5 +151,36 @@ def liste_utilisateur():
 #     return liste
 
 
+#_____________________________
+# Exercice 69 : nombre de jours et d'heures
+
+def nbrJourHeure(dateDebut, dateFin):
+    """
+    Méthodologie :
+    Axiome : partons du principe que la date de debut est toujours antérieure à la date de fin.
+
+    - si les années sont identiques sur les 2 dates, alors c'est assez simple car soit :
+        - le mois de la date de fin est supérieure à la date de début et on peut facilement calculer le delta
+        - soit les mois sont identitiques mais alors le jour de la date de fin est supérieur à la date de début et on peut facilement calculer le delta
+    
+    - si les années sont différentes sur les 2 dates, c'est plus compliqué car alors le mois de la 2ème date peut être antérieur à celui de la première.
+        - on se place au 1er janvier de l'année de la date de fin.
+        - on calcul l'écart entre le 1er janvier et la date de fin.
+        - on fait la différence entre année de la date de fin et année de la date de début (deltaAnnee).
+        - le nombre d'années COMPLETES entre date de début et date de fin corresponds à daltaAnnee - 1.
+        - ensuite on se place au 31 décembre de l'année de la date de début et on calcule le delta avec la date de début. 
+    """
+
+    # On convertis nos dates en listes, format : [YYYY, MM, JJ]
+    debut = [int(i) for i in dateDebut.split('/')]
+    fin = [int(i) for i in dateFin.split('/')]
+
+    # Nos 31 décembre de l'année de début et 1er janvier de l'année de fin
+    december_out = [debut[0], 12, 31]
+    janvier_start = [fin[0], 1, 1]
+
+    # Calcul de l'écart entre 1er janvier et fin
+    month = 
+
 if __name__ == '__main__':
-    pass
+    nbrJourHeure(dateDebut="2025/01/01", dateFin="2025/02/28")
