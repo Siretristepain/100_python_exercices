@@ -76,25 +76,69 @@ TypeError: 'str' object does not support item assignment
 C'est exactement la même chose dans ma méthode liste_utilisateur.
 Initialement c'est une str, mais en lui appliquant la méthode split(), elle devient une liste, mais Pylance ne le voit pas.
 C'est pour ça que le code fonctionne alors que Pylance nous souligne une erreur.
+
+Ce que je ne comprends pas, c'est pourquoi en faisant :
+def liste_utilisateur():
+    chaine = input("Saisir une liste d'entier : ")
+    chaine = chaine.strip('[]')
+    liste = chaine.split(',')
+    for i in range(len(liste)):
+        liste[i] = int(liste[i])
+    return liste
+
+L'erreur persisite malgré le changement de variable.
+
+Explications ChatGPT (ça vaut ce que ça vaut) :
+
+⚠️ Pourquoi Pylance signale encore une erreur même après avoir changé le nom de la variable ?
+En fait, ce n’est pas uniquement une question de nom, c’est une question de type déduit par Pylance à un instant donné dans le code.
+
+Prenons ça ligne par ligne dans ce code :
+
+python
+Copier
+Modifier
+chaine = input("Saisir une liste d'entier : ")
+chaine = chaine.strip('[]')
+liste = chaine.split(',')  # ← Ici, Pylance comprend : "liste est une list[str]"
+for i in range(len(liste)):
+    liste[i] = int(liste[i])  # ← 🔴 Problème ici pour Pylance !
+Ce que fait Pylance :
+
+À la ligne liste = chaine.split(','), il déduit que liste est de type list[str].
+
+À la ligne suivante, tu fais une modification "in-place" du contenu avec liste[i] = int(...).
+
+Et là, Pylance est en panique parce que :
+
+Il a vu que liste était une list[str],
+
+Tu lui dis maintenant que ce sera une list[int] après modification,
+
+Donc, il signale une incohérence de type entre avant et après.
+
+👉 C’est une limitation de l’analyse de type "naïve" : Pylance ne suit pas les mutations internes aussi bien que Python à l’exécution.
 """
 
-# def liste_utilisateur():
-#     # Demander la liste d'entier à l'utilisateur
-#     liste_utilisateur = input("Saisir une liste d'entier : ")
+def liste_utilisateur():
+    # Demander la liste d'entier à l'utilisateur
+    liste_utilisateur = input("Saisir une liste d'entier : ")
 
-#     # On enlève les crochets au début et à la fin de la liste (s'il y en a. Pas d'erreur avec lstrip/rstrip s'il y en a pas).
-#     liste_utilisateur = liste_utilisateur.lstrip('[')
-#     liste_utilisateur = liste_utilisateur.rstrip(']')
+    # On enlève les crochets au début et à la fin de la liste (s'il y en a. Pas d'erreur avec lstrip/rstrip s'il y en a pas).
+    liste_utilisateur = liste_utilisateur.lstrip('[')
+    liste_utilisateur = liste_utilisateur.rstrip(']')
 
-#     # On sépare les entiers par les virgules
-#     liste_utilisateur = liste_utilisateur.split(sep=',')
+    # On sépare les entiers par les virgules
+    tes = liste_utilisateur.split(sep=',')
 
-#     # On passe chaque entier en type integer car ils sont en str pour l'instant
-#     for i in range(len(liste_utilisateur)):
-#         liste_utilisateur[i] = int(liste_utilisateur[i])
+    # On passe chaque entier en type integer car ils sont en str pour l'instant
+    for i in range(len(tes)):
+        tes[i] = int(tes[i])
 
 
-#     return liste_utilisateur
+    return liste_utilisateur
+
+
 
 # def liste_utilisateur_bis():
 #     # Demander la liste d'entier à l'utilisateur
