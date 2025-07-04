@@ -153,6 +153,9 @@ Donc, il signale une incohérence de type entre avant et après.
 
 #_____________________________
 # Exercice 69 : nombre de jours et d'heures
+import logging
+
+logging.basicConfig(level=logging.INFO)
 
 def nbrJourHeure(dateDebut, dateFin):
     """
@@ -171,16 +174,151 @@ def nbrJourHeure(dateDebut, dateFin):
         - ensuite on se place au 31 décembre de l'année de la date de début et on calcule le delta avec la date de début. 
     """
 
+    DAYS_PER_MONTH = [31,28,31,30,31,30,31,31,30,31,30,31]
+
     # On convertis nos dates en listes, format : [YYYY, MM, JJ]
     debut = [int(i) for i in dateDebut.split('/')]
     fin = [int(i) for i in dateFin.split('/')]
 
-    # Nos 31 décembre de l'année de début et 1er janvier de l'année de fin
-    december_out = [debut[0], 12, 31]
-    janvier_start = [fin[0], 1, 1]
+    nb_jour = 0
 
-    # Calcul de l'écart entre 1er janvier et fin
-    month = 
+    delta_years = fin[0] - debut[0]
+
+    # Cas où il y plus d'un an d'écart
+    if delta_years > 1:
+        logging.debug(f"--> Il y a des années complètes entre les 2 dates")
+
+        # On ajoute les jours des années complètes d'écart
+        nb_jour += sum(DAYS_PER_MONTH) * (delta_years - 1)
+        logging.debug("_________________________________________________________________")
+        logging.debug(f"Nombre d'années complètes d'écart : {delta_years - 1}")
+        logging.debug(f"Nombre de jours ajoutés : {sum(DAYS_PER_MONTH) * (delta_years - 1)}")
+        logging.debug("_________________________________________________________________")
+
+        # On ajoute les jours des mois complets restant de l'année de début
+        nb_jour += sum(DAYS_PER_MONTH[debut[1]:])
+        logging.debug(f"Mois de l'année de la date de début : {debut[1]}")
+        logging.debug(f"Nombre de mois complets : {12 - 1}")
+        logging.debug(f"Nombre de jours ajoutés : {sum(DAYS_PER_MONTH[debut[1]:])} ")
+        logging.debug("_________________________________________________________________")
+
+        # On ajoute les jours restants du mois en cours (on récupère le nombre de jour du mois en cours auxquels on soustraits le jour de la date) de la date de début
+        nb_jour += DAYS_PER_MONTH[debut[1] - 1] - debut[2]
+        logging.debug(f"Jour de la date de début : {debut[2]}")
+        logging.debug(f"Nombre de jours ajoutés : {DAYS_PER_MONTH[debut[1] - 1] - debut[2]}")
+        logging.debug("_________________________________________________________________")
+
+        # On ajoute les jours des mois complets fait de l'année de fin
+        nb_jour += sum(DAYS_PER_MONTH[:fin[1] - 1])
+        logging.debug(f"Mois de la date de fin : {fin[1]}")
+        logging.debug(f"Nombre de mois terminés l'année de fin : {fin[1] - 1}")
+        logging.debug(f"Nombre de jours ajoutés : {sum(DAYS_PER_MONTH[:fin[1] - 1])}")
+        logging.debug("_________________________________________________________________")
+
+        # On ajoute les jours faits du mois en cours de la date de fin
+        nb_jour += fin[2]
+        logging.debug(f"Jour de la date de fin : {fin[2]}")
+        logging.debug(f"Nombre de jours ajoutés : {fin[2]}")
+        logging.debug("_________________________________________________________________")
+
+        print(nb_jour)
+
+    # Cas où il y a moins d'un an d'écart
+    elif delta_years == 1:
+        logging.debug(f"--> Il y a moins d'une année complète entre les 2 dates mais elles ont 2 années différentes")
+        # On ajoute les jours des mois complets restant de l'année de début
+        nb_jour += sum(DAYS_PER_MONTH[debut[1]:])
+        logging.debug(f"Mois de l'année de la date de début : {debut[1]}")
+        logging.debug(f"Nombre de mois complets : {12 - 1}")
+        logging.debug(f"Nombre de jours ajoutés : {sum(DAYS_PER_MONTH[debut[1]:])} ")
+        logging.debug("_________________________________________________________________")
+
+        # On ajoute les jours restants du mois en cours (on récupère le nombre de jour du mois en cours auxquels on soustraits le jour de la date) de la date de début
+        nb_jour += DAYS_PER_MONTH[debut[1] - 1] - debut[2]
+        logging.debug(f"Jour de la date de début : {debut[2]}")
+        logging.debug(f"Nombre de jours ajoutés : {DAYS_PER_MONTH[debut[1] - 1] - debut[2]}")
+        logging.debug("_________________________________________________________________")
+
+        # On ajoute les jours des mois complets fait de l'année de fin
+        nb_jour += sum(DAYS_PER_MONTH[:fin[1] - 1])
+        logging.debug(f"Mois de la date de fin : {fin[1]}")
+        logging.debug(f"Nombre de mois terminés l'année de fin : {fin[1] - 1}")
+        logging.debug(f"Nombre de jours ajoutés : {sum(DAYS_PER_MONTH[:fin[1] - 1])}")
+        logging.debug("_________________________________________________________________")
+
+        # On ajoute les jours faits du mois en cours de la date de fin
+        nb_jour += fin[2]
+        logging.debug(f"Jour de la date de fin : {fin[2]}")
+        logging.debug(f"Nombre de jours ajoutés : {fin[2]}")
+        logging.debug("_________________________________________________________________")
+
+        print(nb_jour)
+
+    # Cas où les 2 dates sont la même année
+    elif delta_years == 0:
+        logging.debug(f"--> Les 2 dates sont la même année")
+        delta_month = fin[1] - debut[1]
+
+        # Cas où il y a plus d'un mois complet d'écart
+        if delta_month > 1:
+            logging.debug("Il y a des mois entiers d'écart entre les 2 dates")
+
+            # On ajoute les jours restant du mois de début + les jours fais du mois de fin
+            nb_jour += (DAYS_PER_MONTH[debut[1] - 1] - debut[2]) + fin[2]
+            logging.debug(f"Jour de debut : {debut[2]} et mois de debut : {debut[1]}")
+            logging.debug(f"Jour de fin : {fin[2]}")
+            logging.debug(f"Nombre de jours ajoutés : {(DAYS_PER_MONTH[debut[1] - 1] - debut[2]) + fin[2]}")
+            logging.debug("_________________________________________________________________")
+
+            # On ajoute tous les jours des mois complets faits entre les 2 mois de début et de fin
+            nb_jour += sum(DAYS_PER_MONTH[debut[1]:fin[1] - 1])
+            logging.debug(f"Mois de départ : {debut[1]}")
+            logging.debug(f"Mois de fin : {fin[1]}")
+            logging.debug(f"Nombre de mois entier d'écart : {len(DAYS_PER_MONTH[debut[1]:fin[1] - 1])}")
+            logging.debug("_________________________________________________________________")
+
+            print(nb_jour)
+
+        elif delta_month == 1:
+            logging.debug(f"Les 2 dates sont sur des mois consécutifs (donc moins d'un mois d'écart mais pas le même mois quand même)")
+            # On ajoute les jours qui reste à faire entre la date de début et la fin du moi + les jours déjà faits du mois de la date de fin
+            nb_jour += (DAYS_PER_MONTH[debut[1] - 1] - debut[2]) + fin[2]
+
+            logging.debug(f"Jour de debut : {debut[2]} et mois de debut : {debut[1]}")
+            logging.debug(f"Jour de fin : {fin[2]}")
+            logging.debug(f"Nombre de jours ajoutés : {(DAYS_PER_MONTH[debut[1] - 1] - debut[2]) + fin[2]}")
+            logging.debug("_________________________________________________________________")
+
+            print(nb_jour)
+
+        elif delta_month == 0:
+            logging.debug("Les 2 dates sont le même mois")
+
+            nb_jour += fin[2] - debut[2]
+            logging.debug(f"Jour du début : {debut[2]}")
+            logging.debug(f"Jour de fin : {fin[2]}")
+            logging.debug(f"Nombres de jours ajoutés : {fin[2] - debut[2]}")
+            logging.debug("_________________________________________________________________")
+
+            print(nb_jour)
+
+
+
+        else:
+            raise ValueError("Les dates renseignées ne sont pas correctes. Les deux dates ont la même année mais le mois de la date de fin est antérieur à celui de la date de début.")
+
+    else:
+        raise ValueError("Les dates renseignées ne sont pas correctes. L'année de fin doit être supérieure à l'année de début.")
+
+    print(f"*** Résultats ***")
+    return print((nb_jour, nb_jour*24))
+
 
 if __name__ == '__main__':
-    nbrJourHeure(dateDebut="2025/01/01", dateFin="2025/02/28")
+    # nbrJourHeure(dateDebut="2020/01/01", dateFin="2025/01/01")
+    # nbrJourHeure(dateDebut="2022/10/10", dateFin="2025/05/07")
+    # nbrJourHeure(dateDebut="2024/10/01", dateFin="2025/05/05")
+    # nbrJourHeure(dateDebut="2025/10/01", dateFin="2025/10/10")
+    # nbrJourHeure(dateDebut="2025/03/10", dateFin="2025/04/09")
+    # nbrJourHeure(dateDebut="2025/10/01", dateFin="2025/10/10")
+    nbrJourHeure(dateDebut="2024/03/08", dateFin="2024/09/10")
