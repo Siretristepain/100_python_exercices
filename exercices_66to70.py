@@ -48,6 +48,34 @@ Pylance lève une erreur de syntaxe sur "liste_utilisateur[i]" (avant le signe =
 Cela est du au fait que initialement, liste_utilisateur est une str et non pas une liste.
 Or Pylance analyse le code de façon statique et ne comprends donc pas, mais le code fonctionne bien.
 À creuser.
+
+Explications :
+
+On peut utiliser les crochets sur des str pour accéder à un caractère MAIS, en Python,
+une str est immutable, ce qui signifie que l'on ne peut pas modifier un caractère dans une chaîne existante.
+
+À l'inverse, les list sont des objets mutables, c'est à fire que l'on peut modifier ses éléments avec
+une assignation comme : liste[i] = valeur.
+
+>>>
+phrase = "bonjour"
+print(phrase[2])
+
+phrase[2] = 'o'
+print(phrase)
+>>>
+
+Le code ci-dessus donne :
+
+'n'
+    phrase[2] = 'o'
+TypeError: 'str' object does not support item assignment
+
+--> on voit bien que les crochets fonctionnent pour accéder à un élément de la str mais ne permettent pas l'assignation.
+
+C'est exactement la même chose dans ma méthode liste_utilisateur.
+Initialement c'est une str, mais en lui appliquant la méthode split(), elle devient une liste, mais Pylance ne le voit pas.
+C'est pour ça que le code fonctionne alors que Pylance nous souligne une erreur.
 """
 
 # def liste_utilisateur():
