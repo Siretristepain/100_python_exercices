@@ -1,7 +1,5 @@
-phrase = "bonjour"
+a = 123
 
-print(phrase[2])
+b = str(a)
 
-phrase[2] = 'o'
-
-print(phrase)
+print(b)
